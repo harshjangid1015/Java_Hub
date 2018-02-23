@@ -1,0 +1,3 @@
+Hi! there...
+This text is going to get copied in test2.txt
+ÿ
