@@ -10,13 +10,13 @@ public class TexterServer {
 		
 		System.out.println("Server started");
 		try {
-		ServerSocket  serverSocket = new ServerSocket(8000);
+		ServerSocket serverSocket = new ServerSocket(8000);
 		
 		System.out.println("server waiting for client");
 		
 		Socket socket = serverSocket.accept();
 		
-		System.out.println("client conncted to server");
+		System.out.println("Server conncted to Clinet");
 		
 		ObjectInputStream  inputFromClient = new ObjectInputStream(socket.getInputStream());
 		ObjectOutputStream outputToClient = new ObjectOutputStream(socket.getOutputStream());
@@ -25,7 +25,7 @@ public class TexterServer {
 			
 			String message = (String)inputFromClient.readObject();
 			
-			System.out.println("Client: " +message );
+			System.out.println("Client: " + message);
 			
 			System.out.println("Enter a message: ");
 			

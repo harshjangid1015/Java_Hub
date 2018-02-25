@@ -16,7 +16,7 @@ public class Q2_Parallel {
 	public static void main(String[] args) {
 
 		long startTime = System.currentTimeMillis();
-		System.out.println("Sequential Sum: "+sequentialAdd());
+//		System.out.println("Sequential Sum: "+sequentialAdd());
 		long endTime = System.currentTimeMillis();
 		System.out.println("Time taken for Sequential Sum: "+ (endTime-startTime) + " miliseconds");
 
@@ -38,7 +38,7 @@ public class Q2_Parallel {
 	}
 
 	public static double parallelAdd() {
-		RecursiveTask<Double> task = new parSum(0.0001, 0, 1000000);
+		RecursiveTask<Double> task = new parSum(0.1, 0, 100);
 		ForkJoinPool pool = new ForkJoinPool();
 		return pool.invoke(task);
 
@@ -46,7 +46,7 @@ public class Q2_Parallel {
 	}
 
 	private static class parSum extends RecursiveTask<Double>{
-		private final int Threshold = 500000;
+		private final int Threshold = 50;
 		private double steps;
 		private int start;
 		private int end;
@@ -59,10 +59,10 @@ public class Q2_Parallel {
 
 		@Override
 		protected Double compute() {
-			if (end - start < Threshold) {
+			if (end - start <= Threshold) {
 				double sum =0;
 				for(int i=start; i<=end; i+=steps) {
-					sum += 0.0001;
+					sum += 0.1;
 				}
 				return sum;
 			}

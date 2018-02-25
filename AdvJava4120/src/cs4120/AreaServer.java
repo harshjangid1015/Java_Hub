@@ -11,14 +11,14 @@ public class AreaServer {
 		System.out.println("waiting for client");
 		
 		Socket socket = serverSocket.accept();
-		System.out.println("");
+		System.out.println("Servar connected to client");
 		
 		DataInputStream inputFromClient = new DataInputStream(socket.getInputStream());
 		DataOutputStream outputToClient = new DataOutputStream(socket.getOutputStream());
 		
 		while(true) {
 			double radius = inputFromClient.readDouble();
-			System.out.println("Received radius "+ radius);
+			System.out.println("Received radius " + radius);
 			
 			double area = radius*radius*Math.PI;
 			outputToClient.writeDouble(area);
