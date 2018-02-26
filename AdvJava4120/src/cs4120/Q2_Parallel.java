@@ -31,22 +31,20 @@ public class Q2_Parallel {
 
 	public static double sequentialAdd() {
 		double sum =0;
-		for(double i=0.0; i<=1000000.0; i+=0.0001 ) {
+		for(double i=0.0; i<=1000000.0; i+=0.0001) {
 			sum += 0.0001;
 		}
 		return sum;
 	}
 
 	public static double parallelAdd() {
-		RecursiveTask<Double> task = new parSum(0.1, 0, 100);
+		RecursiveTask<Double> task = new parSum(1, 0, 1000);
 		ForkJoinPool pool = new ForkJoinPool();
 		return pool.invoke(task);
-
-		//		return 0.0;
 	}
 
 	private static class parSum extends RecursiveTask<Double>{
-		private final int Threshold = 50;
+		private final int Threshold = 500;
 		private double steps;
 		private int start;
 		private int end;
@@ -60,9 +58,9 @@ public class Q2_Parallel {
 		@Override
 		protected Double compute() {
 			if (end - start <= Threshold) {
-				double sum =0;
-				for(int i=start; i<=end; i+=steps) {
-					sum += 0.1;
+				double sum =0.0;
+				for(int i=start; i<end; i+=steps) {
+					sum += steps;
 				}
 				return sum;
 			}

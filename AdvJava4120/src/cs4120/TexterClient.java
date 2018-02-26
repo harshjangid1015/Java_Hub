@@ -14,10 +14,10 @@ public class TexterClient {
 			Socket socket = new Socket("localhost", 8000);
 
 			System.out.println("clent connected to server");
-			
+
 			ObjectOutputStream outputToServer = new ObjectOutputStream(socket.getOutputStream());
 			ObjectInputStream  inputFromServer = new ObjectInputStream(socket.getInputStream());
-			
+
 
 			while(true) {
 				System.out.println("Enter a message: ");
@@ -29,7 +29,7 @@ public class TexterClient {
 
 				System.out.println("Server: " + message);
 
-//				message = (String)inputFromServer.readObject();
+				//				message = (String)inputFromServer.readObject();
 			}}catch(Exception ex) {System.out.println(ex);}
 	}
 }
