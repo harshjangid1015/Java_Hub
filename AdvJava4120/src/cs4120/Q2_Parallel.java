@@ -13,10 +13,12 @@ produced. (Hint: The sum in both cases should be 1000000.0, possibly with some e
 decimal places.)*/
 
 public class Q2_Parallel {
+	
+	
 	public static void main(String[] args) {
 
 		long startTime = System.currentTimeMillis();
-//		System.out.println("Sequential Sum: "+sequentialAdd());
+		System.out.println("Sequential Sum: "+sequentialAdd());
 		long endTime = System.currentTimeMillis();
 		System.out.println("Time taken for Sequential Sum: "+ (endTime-startTime) + " miliseconds");
 
@@ -38,18 +40,18 @@ public class Q2_Parallel {
 	}
 
 	public static double parallelAdd() {
-		RecursiveTask<Double> task = new parSum(1, 0, 1000);
+		RecursiveTask<Double> task = new parSum(0.0001, 0, 1000000);
 		ForkJoinPool pool = new ForkJoinPool();
 		return pool.invoke(task);
 	}
 
 	private static class parSum extends RecursiveTask<Double>{
-		private final int Threshold = 500;
+		private final double Threshold = 5000;
 		private double steps;
-		private int start;
-		private int end;
+		private double start;
+		private double end;
 
-		public parSum(double steps, int start, int end) {
+		public parSum(double steps, double start, double end) {
 			this.steps = steps;
 			this.start = start;
 			this.end = end;
@@ -59,13 +61,13 @@ public class Q2_Parallel {
 		protected Double compute() {
 			if (end - start <= Threshold) {
 				double sum =0.0;
-				for(int i=start; i<end; i+=steps) {
+				for(double i=start; i<end; i+=steps) {
 					sum += steps;
 				}
 				return sum;
 			}
 			else {
-				int mid = (start + end)/2;
+				double mid = (start + end)/2;
 				RecursiveTask<Double> left = new parSum(steps, start, mid);
 				RecursiveTask<Double> right = new parSum(steps, mid, end);
 				
