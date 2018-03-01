@@ -25,7 +25,7 @@ public class Q1_BubbleSort {
 			System.out.print(randIntArray[i] + ", ");
 		}
 		System.out.println();
-		//sorting in Ascending order		
+		//sorting in Ascending order
 		bubbleSort(randIntArray, true);
 		//Printing Random integer array
 		System.out.print("Sorted integer array: ");
@@ -33,24 +33,24 @@ public class Q1_BubbleSort {
 			System.out.print(randIntArray[i] + ", ");
 		}
 		System.out.println();
-		//sorting in Descending order		
+		//sorting in Descending order
 		bubbleSort(randIntArray, false);
 		//Printing Random integer array
 		System.out.print("Descending Sorted array: ");
 		for(int i=0; i<randIntArray.length; i++) {
 			System.out.print(randIntArray[i] + ", ");
 		}
-		
-		
-		
-		
+
+
+
+
 		System.out.println();
 		System.out.println();
 		//Random Strings
 		String Alphabets = "abcdefghijklmnopqrstuvwxyz";
 		String[] randStrArray = new String[size];
 		for(int i=0; i<randStrArray.length; i++) {
-			String tempStr = ""; 
+			String tempStr = "";
 			int strLen = (int)(1+ Math.random()*10);
 			for(int j=0; j<strLen; j++) {
 				char c = Alphabets.charAt((int) (Math.random()*26));
@@ -70,23 +70,23 @@ public class Q1_BubbleSort {
 		for(int i=0; i<randStrArray.length; i++) {
 			System.out.print(randStrArray[i] + ", ");
 		}
-		
+
 		System.out.println();
-		//sorting in Descending order		
+		//sorting in Descending order
 		bubbleSort(randStrArray, false);
 		//Printing Random integer array
 		System.out.print("Descending Sorted array: ");
 		for(int i=0; i<randStrArray.length; i++) {
 			System.out.print(randStrArray[i] + ", ");
 		}
-		
+
 
 	}
 
 	public static <E extends Comparable<E>>void bubbleSort(E[] list, boolean AscOrDesc) {
 		boolean change;
 		boolean isAscending = AscOrDesc;
-				
+
 		if (isAscending == true) {
 			do {
 				change = false;
