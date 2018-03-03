@@ -1,12 +1,8 @@
 package cs4120;
 
-import java.io.DataInputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.net.ServerSocket;
-import java.net.Socket;
-import java.util.Scanner;;
+import java.io.*;
+import java.net.*;
+import java.util.Scanner;
 
 public class TextChatServer {
 	public static void main(String[] args) {
@@ -70,7 +66,9 @@ class WriteToServertThread implements Runnable{
 			ObjectOutputStream outputToClient = new ObjectOutputStream(socket.getOutputStream());
 			Scanner input = new Scanner(System.in);
 			while(true) {
+//				String message = input.next();
 				String message = input.nextLine();
+//				System.out.println("Server: " + message);
 				outputToClient.writeObject(message);
 				
 			}

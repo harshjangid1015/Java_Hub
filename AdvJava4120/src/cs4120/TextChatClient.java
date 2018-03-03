@@ -1,10 +1,7 @@
 package cs4120;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.net.Socket;
-import java.net.UnknownHostException;
+import java.io.*;
+import java.net.*;
 import java.util.Scanner;
 
 public class TextChatClient {
@@ -62,6 +59,7 @@ class WriteToServerThread implements Runnable{
 			Scanner input = new Scanner(System.in);
 			while(true) {
 				String message = input.nextLine();
+//				System.out.println("Client: " + message);
 				outputToServer.writeObject(message);
 				
 			}
