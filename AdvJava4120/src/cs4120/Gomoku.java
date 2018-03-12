@@ -58,8 +58,16 @@ public class Gomoku extends Application {
 		primaryStage.setTitle("Gomoku");
 		primaryStage.setScene(scene);
 		primaryStage.show();
-
-
+	}
+	
+	public boolean isFull() {
+		for(int i= 0; i< 19; i++) {
+			for(int j= 0; j< 19; j++) {
+				if (cell[i][j].getToken() == ' ')
+					return fasle;
+			}
+		}
+		return true;
 	}
 
 	public static void main(String[] args) {
