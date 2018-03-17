@@ -58,95 +58,54 @@ public class Gomoku extends Application {
 	}
 
 	public boolean isWon(char token) {
-		for (int i = 0; i < 19; i++)
-			if (cell[i][0].getToken() == token
-			&& cell[i][1].getToken() == token
-			&& cell[i][2].getToken() == token
-			&& cell[i][3].getToken() == token
-			&& cell[i][4].getToken() == token
-			&& cell[i][5].getToken() == token
-			&& cell[i][6].getToken() == token
-			&& cell[i][7].getToken() == token
-			&& cell[i][8].getToken() == token
-			&& cell[i][9].getToken() == token
-			&& cell[i][10].getToken() == token
-			&& cell[i][11].getToken() == token
-			&& cell[i][12].getToken() == token
-			&& cell[i][13].getToken() == token
-			&& cell[i][14].getToken() == token
-			&& cell[i][15].getToken() == token
-			&& cell[i][16].getToken() == token
-			&& cell[i][17].getToken() == token
-			&& cell[i][18].getToken() == token) {
-				return true;
+
+		for (int i =0; i<19; i++) {
+			for (int j = 0; j<19; j++) {
+				if(cell[i][j].getToken() == token
+						&& cell[i][j+1].getToken() == token
+						&& cell[i][j+2].getToken() == token
+						&& cell[i][j+3].getToken() == token
+						&& cell[i][j+4].getToken() == token) {
+					return true;
+				}
 			}
+		}
 		
-
-		for (int j = 0; j < 19; j++)
-			if (cell[0][j].getToken() ==  token
-			&& cell[1][j].getToken() == token
-			&& cell[2][j].getToken() == token
-			&& cell[3][j].getToken() == token
-			&& cell[4][j].getToken() == token
-			&& cell[5][j].getToken() == token
-			&& cell[6][j].getToken() == token
-			&& cell[7][j].getToken() == token
-			&& cell[8][j].getToken() == token
-			&& cell[9][j].getToken() == token
-			&& cell[10][j].getToken() == token
-			&& cell[11][j].getToken() == token
-			&& cell[12][j].getToken() == token
-			&& cell[13][j].getToken() == token
-			&& cell[14][j].getToken() == token
-			&& cell[15][j].getToken() == token
-			&& cell[16][j].getToken() == token
-			&& cell[17][j].getToken() == token
-			&& cell[18][j].getToken() == token) {
-				return true;
+		for (int i =0; i<19; i++) {
+			for (int j = 0; j<19; j++) {
+				if(cell[i][j].getToken() == token
+						&& cell[i+1][j].getToken() == token
+						&& cell[i+2][j].getToken() == token
+						&& cell[i+3][j].getToken() == token
+						&& cell[i+4][j].getToken() == token) {
+					return true;
+				}
 			}
-
-		if (cell[0][0].getToken() == token 
-				&& cell[1][1].getToken() == token        
-				&& cell[2][2].getToken() == token
-				&& cell[3][3].getToken() == token
-				&& cell[4][4].getToken() == token
-				&& cell[5][5].getToken() == token
-				&& cell[6][6].getToken() == token
-				&& cell[7][7].getToken() == token
-				&& cell[8][8].getToken() == token
-				&& cell[9][9].getToken() == token
-				&& cell[10][10].getToken() == token
-				&& cell[11][11].getToken() == token
-				&& cell[12][12].getToken() == token
-				&& cell[13][13].getToken() == token
-				&& cell[14][14].getToken() == token
-				&& cell[15][15].getToken() == token
-				&& cell[16][16].getToken() == token
-				&& cell[17][17].getToken() == token
-				&& cell[18][18].getToken() == token) {
-			return true;
+		}
+		
+		for (int i =0; i<19; i++) {
+			for (int j = 0; j<19; j++) {
+				if(cell[i][j].getToken() == token
+						&& cell[i+1][j+1].getToken() == token
+						&& cell[i+2][j+2].getToken() == token
+						&& cell[i+3][j+3].getToken() == token
+						&& cell[i+4][j+4].getToken() == token) {
+					return true;
+				}
+			}
 		}
 
-		if (cell[0][18].getToken() == token
-				&& cell[1][17].getToken() == token
-				&& cell[2][16].getToken() == token
-				&& cell[3][15].getToken() == token
-				&& cell[4][14].getToken() == token
-				&& cell[5][13].getToken() == token
-				&& cell[6][12].getToken() == token
-				&& cell[7][11].getToken() == token
-				&& cell[8][10].getToken() == token
-				&& cell[9][9].getToken() == token
-				&& cell[10][8].getToken() == token
-				&& cell[11][7].getToken() == token
-				&& cell[12][6].getToken() == token
-				&& cell[13][5].getToken() == token
-				&& cell[14][4].getToken() == token
-				&& cell[15][3].getToken() == token
-				&& cell[16][2].getToken() == token
-				&& cell[17][1].getToken() == token
-				&& cell[18][0].getToken() == token) {
-			return true;
+		
+		for (int i =0; i<19; i++) {
+			for (int j = 0; j<19; j++) {
+				if(cell[i][j].getToken() == token
+						&& cell[i-1][j+1].getToken() == token
+						&& cell[i-2][j+2].getToken() == token
+						&& cell[i-3][j+3].getToken() == token
+						&& cell[i-4][j+4].getToken() == token) {
+					return true;
+				}
+			}
 		}
 
 		return false;
@@ -179,7 +138,7 @@ public class Gomoku extends Application {
 				A.setStroke(Color.BLACK);
 				A.setFill(Color.BLACK);
 				getChildren().add(A);
-				
+
 
 			}
 			else if (token == 'O') {
@@ -190,7 +149,7 @@ public class Gomoku extends Application {
 				B.setStroke(Color.BLACK);
 				B.setFill(Color.WHITE);
 				getChildren().add(B);
-				
+
 
 			}
 		}
