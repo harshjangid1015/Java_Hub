@@ -9,10 +9,9 @@ import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Line;
 import javafx.scene.shape.Circle;
-import javafx.scene.shape.Ellipse;
 
 public class Gomoku extends Application {
 
@@ -21,6 +20,8 @@ public class Gomoku extends Application {
 	Cell[][] cell =  new Cell[19][19];
 
 	Label lblStatus = new Label("X's turn to play");
+	
+	
 
 	@Override
 	public void start(Stage primaryStage){
@@ -66,6 +67,11 @@ public class Gomoku extends Application {
 						&& cell[i][j+2].getToken() == token
 						&& cell[i][j+3].getToken() == token
 						&& cell[i][j+4].getToken() == token) {
+					cell[i][j].setStyle("-fx-border-color: red; -fx-background-color: lightgray;");
+					cell[i][j+1].setStyle("-fx-border-color: red; -fx-background-color: lightgray;");
+					cell[i][j+2].setStyle("-fx-border-color: red; -fx-background-color: lightgray;");
+					cell[i][j+3].setStyle("-fx-border-color: red; -fx-background-color: lightgray;");
+					cell[i][j+4].setStyle("-fx-border-color: red; -fx-background-color: lightgray;");
 					return true;
 				}
 			}
@@ -78,6 +84,11 @@ public class Gomoku extends Application {
 						&& cell[i+2][j].getToken() == token
 						&& cell[i+3][j].getToken() == token
 						&& cell[i+4][j].getToken() == token) {
+					cell[i][j].setStyle("-fx-border-color: red; -fx-background-color: lightgray;");
+					cell[i+1][j].setStyle("-fx-border-color: red; -fx-background-color: lightgray;");
+					cell[i+2][j].setStyle("-fx-border-color: red; -fx-background-color: lightgray;");
+					cell[i+3][j].setStyle("-fx-border-color: red; -fx-background-color: lightgray;");
+					cell[i+4][j].setStyle("-fx-border-color: red; -fx-background-color: lightgray;");
 					return true;
 				}
 			}
@@ -90,6 +101,11 @@ public class Gomoku extends Application {
 						&& cell[i+2][j+2].getToken() == token
 						&& cell[i+3][j+3].getToken() == token
 						&& cell[i+4][j+4].getToken() == token) {
+					cell[i][j].setStyle("-fx-border-color: red; -fx-background-color: lightgray;");
+					cell[i+1][j+1].setStyle("-fx-border-color: red; -fx-background-color: lightgray;");
+					cell[i+2][j+2].setStyle("-fx-border-color: red; -fx-background-color: lightgray;");
+					cell[i+3][j+3].setStyle("-fx-border-color: red; -fx-background-color: lightgray;");
+					cell[i+4][j+4].setStyle("-fx-border-color: red; -fx-background-color: lightgray;");
 					return true;
 				}
 			}
@@ -103,6 +119,11 @@ public class Gomoku extends Application {
 						&& cell[i-2][j+2].getToken() == token
 						&& cell[i-3][j+3].getToken() == token
 						&& cell[i-4][j+4].getToken() == token) {
+					cell[i][j].setStyle("-fx-border-color: red; -fx-background-color: lightgray;");
+					cell[i-1][j+1].setStyle("-fx-border-color: red; -fx-background-color: lightgray;");
+					cell[i-2][j+2].setStyle("-fx-border-color: red; -fx-background-color: lightgray;");
+					cell[i-3][j+3].setStyle("-fx-border-color: red; -fx-background-color: lightgray;");
+					cell[i-4][j+4].setStyle("-fx-border-color: red; -fx-background-color: lightgray;");
 					return true;
 				}
 			}
@@ -112,7 +133,7 @@ public class Gomoku extends Application {
 	}
 
 
-	public class Cell extends Pane{
+	public class Cell extends StackPane{
 		// Token used for this cell
 		private char token = ' ';
 
@@ -162,6 +183,7 @@ public class Gomoku extends Application {
 				// Check game status
 				if (isWon(whoseTurn)) {
 					lblStatus.setText(whoseTurn + " won! The game is over");
+					
 					whoseTurn = ' '; // Game is over
 				}
 				else if (isFull()) {
