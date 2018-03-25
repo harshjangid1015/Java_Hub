@@ -20,7 +20,7 @@ public class PixelPaint extends Application {
 	
 	Cell[][] cell = new Cell[32][32];
 	
-	Label lblStatus = new Label("Green Color Selected");
+	Label lblStatus = new Label("GREEN Brush Selected");
 
 	@Override
 	public void start(Stage primaryStage) {
@@ -39,11 +39,16 @@ public class PixelPaint extends Application {
 		hBox.getChildren().add(RED);
 		hBox.getChildren().add(GREEN);
 		hBox.getChildren().add(BLUE);
-//		Rectangle r =new Rectangle();
-//		r.setWidth(25);
-//		r.setHeight(25);
-//		r.setStroke(Color.BLACK);
-//		r.setFill(Color.RED);
+//		RED.setOnAction(e -> whichColor = 'R');
+		RED.setOnAction(e -> {
+			whichColor = 'R';
+			lblStatus.setText("Red Brush Selected");});
+		GREEN.setOnAction(e -> {
+			whichColor = 'G';
+			lblStatus.setText("GREEN Brush Selected");});
+		BLUE.setOnAction(e -> {
+			whichColor = 'B';
+			lblStatus.setText("BLUE Brush Selected");});
 		
 		BorderPane borderPane  = new BorderPane();
 		borderPane.setStyle("-fx-border-color: red");
@@ -56,9 +61,7 @@ public class PixelPaint extends Application {
 		primaryStage.setScene(scene);
 		primaryStage.show();
 	}
-	public static void main(String[] args) {
-		launch(args);
-	}
+	
 	
 	class Cell extends StackPane{
 		private char brush = ' ';
@@ -134,5 +137,8 @@ public class PixelPaint extends Application {
 //				}
 			}
 		}
+	}
+	public static void main(String[] args) {
+		launch(args);
 	}
 }
