@@ -9,7 +9,7 @@ public class TextChatClient {
 		
 		try {
 			Socket socket = new Socket("localhost", 8000);
-			System.out.println("client connected to client");
+			System.out.println("client connected to server");
 			
 			ReadFromServerThread readTask = new ReadFromServerThread(socket);
 			WriteToServerThread writeTask = new WriteToServerThread(socket);
