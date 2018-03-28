@@ -64,6 +64,7 @@ public class Q3_ChatRoomServer extends Application {
 						try {							
 							String	message2 = inputTextField.getText();
 							outputToClient.writeObject(message2);
+							ta.appendText("Server: "+message + '\n');
 							outputToClient.flush();
 							inputTextField.clear();
 							

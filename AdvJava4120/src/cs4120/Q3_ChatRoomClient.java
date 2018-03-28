@@ -40,20 +40,20 @@ public class Q3_ChatRoomClient extends Application {
 		primaryStage.setScene(scene);
 		primaryStage.setTitle("ChatRoomClient");
 		primaryStage.show();
-;
+		;
 		ta.appendText("clent started" + '\n');;
 		try {
 			Socket socket = new Socket("localhost", 8000);
 			ta.appendText("clent connected to server" + '\n');
 
-			 outputToServer = new ObjectOutputStream(socket.getOutputStream());
-			  inputFromServer = new ObjectInputStream(socket.getInputStream());
+			outputToServer = new ObjectOutputStream(socket.getOutputStream());
+			inputFromServer = new ObjectInputStream(socket.getInputStream());
 		}catch(Exception ex) {
 
 		}
 		new Thread(()->{
-		
-//		inputTextField.setOnAction(e -> {
+
+			//		inputTextField.setOnAction(e -> {
 			try {
 				while(true) {
 					String message;
@@ -61,6 +61,7 @@ public class Q3_ChatRoomClient extends Application {
 						try {
 							String message1 = inputTextField.getText();
 							outputToServer.writeObject(message1);
+							ta.appendText("Client: "+message1 + '\n');
 							outputToServer.flush();
 							inputTextField.clear();
 						} catch (IOException e1) {
@@ -73,7 +74,7 @@ public class Q3_ChatRoomClient extends Application {
 			}catch(Exception ex) {
 
 			}
-//		});
+			//		});
 		}).start();
 
 	}
