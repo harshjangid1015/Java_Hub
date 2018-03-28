@@ -1,5 +1,7 @@
 package cs4120;
 
+import javafx.scene.control.TextArea;
+
 import javafx.application.Application;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
@@ -21,9 +23,10 @@ public class PixelPaint extends Application {
 	Color whichColor;
 	
 	Cell[][] cell = new Cell[32][32];
-	
+	TextArea ta = new TextArea();
 	Label lblStatus = new Label("select a color from ColorPicker");
-
+	ColorPicker colorPicker = new ColorPicker();
+	
 	@Override
 	public void start(Stage primaryStage) {
 		
@@ -33,7 +36,7 @@ public class PixelPaint extends Application {
 				gridPane.add(cell[i][j] = new Cell(), j, i);
 			}
 		}
-		ColorPicker colorPicker = new ColorPicker();
+//		ColorPicker colorPicker = new ColorPicker();
 //		colorPicker.setValue(Color.RED);
 //		Button RED = new Button("RED");
 //		Button GREEN = new Button("GREEN");
@@ -47,9 +50,11 @@ public class PixelPaint extends Application {
 		
 		hBox.getChildren().add(colorPicker);
 		hBox.getChildren().add(SAVE);
+//		hBox.getChildren().add(ta);
+		hBox.getChildren().add(lblStatus);
 		colorPicker.setOnAction(e -> {
 			whichColor = colorPicker.getValue();
-			lblStatus.setText(colorPicker.getValue().toString());
+//			lblStatus.setText(colorPicker.getValue().toString());
 		});
 //		RED.setOnAction(e -> {
 //			whichColor = 'R';
@@ -76,7 +81,7 @@ public class PixelPaint extends Application {
 		
 //		borderPane.setBottom(hBox2);
 		borderPane.setCenter(gridPane);
-		borderPane.setBottom(lblStatus);
+//		borderPane.setBottom(lblStatus);
 		
 		Scene scene = new Scene(borderPane);
 		primaryStage.setTitle("Pixel Paint");
@@ -107,7 +112,10 @@ public class PixelPaint extends Application {
 			r.setFill(brush);
 			getChildren().add(r);
 			
-
+			
+			lblStatus.setText(String.format("r%02X g%02X b%02X", (int)(brush.getRed()*255), (int)(brush.getGreen()*255), (int)(brush.getBlue()*255)));
+			
+//			lblStatus.setText(String.format(Integer.toHexString(brush.getBlue().hashCode()), Integer.toHexString(brush.hashCode()), Integer.toHexString(brush.hashCode())));
 //			if (brush == 'R') {
 //				Rectangle r =new Rectangle();
 //				r.setWidth(23);
