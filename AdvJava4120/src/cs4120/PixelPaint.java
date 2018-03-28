@@ -5,6 +5,7 @@ import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ColorPicker;
 import javafx.scene.input.MouseEvent;
 //import javafx.scene.control.Cell;
 import javafx.scene.layout.GridPane;
@@ -16,11 +17,12 @@ import javafx.scene.layout.HBox;
 
 public class PixelPaint extends Application {
 	
-	char whichColor = 'G';
+//	char whichColor = 'G';
+	Color whichColor;
 	
 	Cell[][] cell = new Cell[32][32];
 	
-	Label lblStatus = new Label("GREEN Brush Selected");
+	Label lblStatus = new Label("select a color from ColorPicker");
 
 	@Override
 	public void start(Stage primaryStage) {
@@ -31,28 +33,48 @@ public class PixelPaint extends Application {
 				gridPane.add(cell[i][j] = new Cell(), j, i);
 			}
 		}
-		
-		Button RED = new Button("RED");
-		Button GREEN = new Button("GREEN");
-		Button BLUE = new Button("BLUE");
+		ColorPicker colorPicker = new ColorPicker();
+//		colorPicker.setValue(Color.RED);
+//		Button RED = new Button("RED");
+//		Button GREEN = new Button("GREEN");
+//		Button BLUE = new Button("BLUE");
+		Button SAVE = new Button("SAVE");
 		HBox hBox = new HBox();
-		hBox.getChildren().add(RED);
-		hBox.getChildren().add(GREEN);
-		hBox.getChildren().add(BLUE);
-//		RED.setOnAction(e -> whichColor = 'R');
-		RED.setOnAction(e -> {
-			whichColor = 'R';
-			lblStatus.setText("Red Brush Selected");});
-		GREEN.setOnAction(e -> {
-			whichColor = 'G';
-			lblStatus.setText("GREEN Brush Selected");});
-		BLUE.setOnAction(e -> {
-			whichColor = 'B';
-			lblStatus.setText("BLUE Brush Selected");});
+//		HBox hBox2 = new HBox();
+//		hBox.getChildren().add(RED);
+//		hBox.getChildren().add(GREEN);
+//		hBox.getChildren().add(BLUE);
+		
+		hBox.getChildren().add(colorPicker);
+		hBox.getChildren().add(SAVE);
+		colorPicker.setOnAction(e -> {
+			whichColor = colorPicker.getValue();
+			lblStatus.setText(colorPicker.getValue().toString());
+		});
+//		RED.setOnAction(e -> {
+//			whichColor = 'R';
+//			lblStatus.setText("Red Brush Selected");});
+//		GREEN.setOnAction(e -> {
+//			whichColor = 'G';
+//			lblStatus.setText("GREEN Brush Selected");});
+//		BLUE.setOnAction(e -> {
+//			whichColor = 'B';
+//			lblStatus.setText("BLUE Brush Selected");});
+		SAVE.setOnAction(e -> {
+			for(int i=0; i<32; i++) {
+				for (int j=0; j<32; j++) {
+					
+					
+				}
+			}
+		});
+		
 		
 		BorderPane borderPane  = new BorderPane();
 		borderPane.setStyle("-fx-border-color: red");
 		borderPane.setTop(hBox);
+		
+//		borderPane.setBottom(hBox2);
 		borderPane.setCenter(gridPane);
 		borderPane.setBottom(lblStatus);
 		
@@ -64,7 +86,7 @@ public class PixelPaint extends Application {
 	
 	
 	class Cell extends StackPane{
-		private char brush = ' ';
+		private Color brush;
 				
 		public Cell() {
 			setStyle("-fx-border-color: black");
@@ -72,51 +94,56 @@ public class PixelPaint extends Application {
 			this.setOnMouseClicked(e -> handleMouseClick());
 		}
 		
-		public char getBrush() {
+		public Color getBrush() {
 			return brush;
 		}
 
 		/** Set a new token */
-		public void setBrush(char c) {
+		public void setBrush(Color c) {
 			brush = c;
+			Rectangle r =new Rectangle();
+			r.setWidth(23);
+			r.setHeight(23);
+			r.setFill(brush);
+			getChildren().add(r);
+			
 
-			if (brush == 'R') {
-				
-				Rectangle r =new Rectangle();
-				r.setWidth(23);
-				r.setHeight(23);
-//				r.setStroke(Color.BLACK);
-				r.setFill(Color.RED);
-				getChildren().add(r);
-//				Circle A = new Circle();
-//				A.setRadius(15);
-//				A.centerXProperty().bind(this.widthProperty().divide(2));
-//				A.centerYProperty().bind(this.heightProperty().divide(2));
-//				A.setStroke(Color.BLACK);
-//				A.setFill(Color.BLACK);
-//				getChildren().add(A);
-			}
-			else if  (brush == 'G'){				
-				Rectangle g =new Rectangle();
-				g.setWidth(23);
-				g.setHeight(23);
-//				r.setStroke(Color.BLACK);
-				g.setFill(Color.GREEN);
-				getChildren().add(g);
-			}
-			else if  (brush == 'B'){				
-				Rectangle b =new Rectangle();
-				b.setWidth(23);
-				b.setHeight(23);
-//				r.setStroke(Color.BLACK);
-				b.setFill(Color.BLUE);
-				getChildren().add(b);
-			}
+//			if (brush == 'R') {
+//				Rectangle r =new Rectangle();
+//				r.setWidth(23);
+//				r.setHeight(23);
+////				r.setStroke(Color.BLACK);
+//				r.setFill(Color.RED);
+//				getChildren().add(r);
+////				Circle A = new Circle();
+////				A.setRadius(15);
+////				A.centerXProperty().bind(this.widthProperty().divide(2));
+////				A.centerYProperty().bind(this.heightProperty().divide(2));
+////				A.setStroke(Color.BLACK);
+////				A.setFill(Color.BLACK);
+////				getChildren().add(A);
+//			}
+//			else if  (brush == 'G'){				
+//				Rectangle g =new Rectangle();
+//				g.setWidth(23);
+//				g.setHeight(23);
+////				r.setStroke(Color.BLACK);
+//				g.setFill(Color.GREEN);
+//				getChildren().add(g);
+//			}
+//			else if  (brush == 'B'){				
+//				Rectangle b =new Rectangle();
+//				b.setWidth(23);
+//				b.setHeight(23);
+////				r.setStroke(Color.BLACK);
+//				b.setFill(Color.BLUE);
+//				getChildren().add(b);
+//			}
 		}
 
 		public void handleMouseClick() {
 			
-			if (brush == ' ' && whichColor != ' ') {
+//			if (brush == ' ' && whichColor != ' ') {
 				setBrush(whichColor); // Set token in the cell
 
 				// Check game status
@@ -137,7 +164,7 @@ public class PixelPaint extends Application {
 //				}
 			}
 		}
-	}
+//	}
 	public static void main(String[] args) {
 		launch(args);
 	}
