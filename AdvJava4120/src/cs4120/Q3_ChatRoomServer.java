@@ -3,7 +3,12 @@ package cs4120;
 
 import java.io.*;
 import java.net.*;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.Enumeration;
+import java.util.Hashtable;
+import java.util.List;
+
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.geometry.Pos;
@@ -22,6 +27,8 @@ public class Q3_ChatRoomServer extends Application {
 	private TextArea ta = new TextArea();
 	Button send = new Button("SEND");
 	TextField inputTextField = new TextField();
+	
+	private Hashtable clientList = new Hashtable();
 
 	// Number a client
 
@@ -46,15 +53,30 @@ public class Q3_ChatRoomServer extends Application {
 		
 		
 		new Thread(()->{try {
+			
 			int clientID = 1;
 			int port = 8000;
 			ServerSocket serverSocket = new ServerSocket(port);
 			Platform.runLater(() ->
 			ta.appendText("Server started at " + new Date() + '\n'));
+			
+			send.setOnAction(event -> {
+				try {
+				String	message2 = inputTextField.getText();
+				int toAll = 0;
+			    sendToAll(message2,toAll);
+				inputTextField.clear();
+				}catch(Exception ex) {
+					ex.printStackTrace();
+				}
+			});
 			while(true) {				
 				Socket socket = serverSocket.accept();
 				ta.appendText("Client " +clientID+ " connected"+ '\n');
 				HandleClientTasks task = new HandleClientTasks(socket, clientID);
+				new HandleClientTasks(socket, clientID);
+				ObjectOutputStream outputToClient = new ObjectOutputStream(socket.getOutputStream());
+				clientList.put(socket, outputToClient);
 				Thread thread = new Thread(task);
 				thread.start();
 				clientID++;
@@ -126,10 +148,41 @@ public class Q3_ChatRoomServer extends Application {
 //		}).start();
 //		clientID++;
 	}
+	Enumeration getOutputStreams() {
+		return clientList.elements();
+	}
+	public void sendToAll(String message, int id) {
+		synchronized(clientList) {
+			if(id!=0) {
+				//if message of any client
+				ta.appendText("Client "+id+" "+message+'\n');
+			}else {
+				//if server sending message
+				ta.appendText("Server message to all client: "+message+'\n');
+			}
+			for(Enumeration e = getOutputStreams();e.hasMoreElements();) {
+				//...get the outputStrams
+				ObjectOutputStream outputToClient = (ObjectOutputStream )e.nextElement();
+                // ...and sendvthe message
+				try
+                {
+              	if(id!=0){
+              	    outputToClient.writeObject("Client: "+id+" "+message + '\n');
+              	}
+              	else
+              	{
+              		outputToClient.writeObject("Server: "+message + '\n');
+              	}
+                
+                } catch(IOException ie ) { System.out.println(ie ); }
+			}
+		}
+	}
 
 	public static void main(String[] args) {
 		launch(args);
 	}
+	
 	class HandleClientTasks implements Runnable{
 		private Socket socket;
 		private int id;
@@ -143,23 +196,28 @@ public class Q3_ChatRoomServer extends Application {
 		public void run() {
 			try {
 				ObjectInputStream  inputFromClient = new ObjectInputStream(socket.getInputStream());
-				ObjectOutputStream outputToClient = new ObjectOutputStream(socket.getOutputStream());
+//				ObjectOutputStream outputToClient = new ObjectOutputStream(socket.getOutputStream());
 				
 				while(true) {
 					String	message = (String)inputFromClient.readObject();
-					ta.appendText("Client: "+this.id+" "+message + '\n');
-					
-					send.setOnAction(event -> {
-						try {
-						String	message2 = inputTextField.getText();
-						outputToClient.writeObject(message2);
-						ta.appendText("Server: "+message + '\n');
-						outputToClient.flush();
-						inputTextField.clear();
-						}catch(Exception ex) {
-							ex.printStackTrace();
-						}
-					});
+					sendToAll(message, id);
+//					ta.appendText("Client: "+this.id+" "+message + '\n');
+//					
+//					outputToClient.writeObject("Client: "+this.id+" "+message + '\n');
+//					
+//										
+//					
+//					send.setOnAction(event -> {
+//						try {
+//						String	message2 = inputTextField.getText();
+//						outputToClient.writeObject(message2);
+//						ta.appendText("Server: "+message + '\n');
+//						outputToClient.flush();
+//						inputTextField.clear();
+//						}catch(Exception ex) {
+//							ex.printStackTrace();
+//						}
+//					});
 					
 				}
 			} catch (IOException e) {

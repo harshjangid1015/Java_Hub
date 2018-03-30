@@ -61,7 +61,7 @@ public class Q3_ChatRoomClient extends Application {
 						try {
 							String message1 = inputTextField.getText();
 							outputToServer.writeObject(message1);
-							ta.appendText("Client: "+message1 + '\n');
+//							ta.appendText("Client: "+message1 + '\n');
 							outputToServer.flush();
 							inputTextField.clear();
 						} catch (IOException e1) {
@@ -69,7 +69,8 @@ public class Q3_ChatRoomClient extends Application {
 						}
 					});
 					message = (String)inputFromServer.readObject();
-					ta.appendText("Server: "+message + '\n');
+//					ta.appendText("Server: "+message + '\n');
+					ta.appendText(message);
 				}
 			}catch(Exception ex) {
 
