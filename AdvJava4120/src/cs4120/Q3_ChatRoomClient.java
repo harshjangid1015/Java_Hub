@@ -21,6 +21,8 @@ public class Q3_ChatRoomClient extends Application {
 	ObjectOutputStream outputToServer = null;
 	ObjectInputStream  inputFromServer = null;
 	private TextArea ta = new TextArea();
+	
+	String userName = "default user...set userName from above";
 
 	@Override
 	public void start(Stage primaryStage) {
@@ -28,13 +30,18 @@ public class Q3_ChatRoomClient extends Application {
 		ScrollPane scrollPane = new ScrollPane(ta);
 
 		TextField inputTextField = new TextField();
+		TextField inputUserName = new TextField();
 
 		Button send = new Button("SEND");
+		Button setUserName = new Button("setUserName");
 		HBox hBox = new HBox();
 		hBox.getChildren().add(inputTextField);
 		hBox.getChildren().add(send);
+		HBox hBox2 = new HBox();
+		hBox2.getChildren().addAll(inputUserName,setUserName);
 
 		borderPane.setBottom(hBox);
+		borderPane.setTop(hBox2);
 		borderPane.setCenter(scrollPane);
 		Scene scene = new Scene(borderPane, 400, 600);
 		primaryStage.setScene(scene);
@@ -42,6 +49,11 @@ public class Q3_ChatRoomClient extends Application {
 		primaryStage.show();
 		;
 		ta.appendText("clent started" + '\n');;
+		setUserName.setOnAction(e -> {
+			userName = inputUserName.getText();
+			ta.appendText("user name set to: "+userName+'\n');
+		});
+		
 		try {
 			Socket socket = new Socket("localhost", 8000);
 			ta.appendText("clent connected to server" + '\n');
@@ -52,35 +64,27 @@ public class Q3_ChatRoomClient extends Application {
 
 		}
 		new Thread(()->{
-
-			//		inputTextField.setOnAction(e -> {
 			try {
 				while(true) {
-					String message;
 					send.setOnAction(event -> {
 						try {
 							String message1 = inputTextField.getText();
-							outputToServer.writeObject(message1);
-//							ta.appendText("Client: "+message1 + '\n');
-							outputToServer.flush();
+							outputToServer.writeObject(userName +": " +message1);
 							inputTextField.clear();
 						} catch (IOException e1) {
 							e1.printStackTrace();
 						}
 					});
-					message = (String)inputFromServer.readObject();
-//					ta.appendText("Server: "+message + '\n');
+					String message = (String)inputFromServer.readObject();					
 					ta.appendText(message);
 				}
 			}catch(Exception ex) {
 
 			}
-			//		});
 		}).start();
 
 	}
 	public static void main(String[] args) {
 		launch(args);
 	}
-
 }

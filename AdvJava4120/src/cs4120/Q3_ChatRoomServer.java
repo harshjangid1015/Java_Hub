@@ -28,20 +28,18 @@ public class Q3_ChatRoomServer extends Application {
 	Button send = new Button("SEND");
 	TextField inputTextField = new TextField();
 	
-	private Hashtable clientList = new Hashtable();
-
-	// Number a client
+	private Hashtable<Socket, ObjectOutputStream> clientList = new Hashtable<Socket, ObjectOutputStream>();
+//	private ArrayList<client> clientList = new ArrayList<>();
+	
 
 	@Override // Override the start method in the Application class
 	public void start(Stage primaryStage) {
 		BorderPane borderPane = new BorderPane();
 		ScrollPane scrollPane = new ScrollPane(ta);
 
-//		TextField inputTextField = new TextField();
-//		Button send = new Button("SEND");
 		HBox hBox = new HBox();
 		hBox.getChildren().addAll(inputTextField, send);
-		hBox.setAlignment(Pos.CENTER);
+//		hBox.setAlignment(Pos.CENTER);
 
 		// Create a scene and place it in the stage
 		Scene scene = new Scene(borderPane, 400, 600);
@@ -70,13 +68,16 @@ public class Q3_ChatRoomServer extends Application {
 					ex.printStackTrace();
 				}
 			});
-			while(true) {				
+			while(true) {		
+				String userName = "";
 				Socket socket = serverSocket.accept();
 				ta.appendText("Client " +clientID+ " connected"+ '\n');
 				HandleClientTasks task = new HandleClientTasks(socket, clientID);
-				new HandleClientTasks(socket, clientID);
+//				new HandleClientTasks(socket, clientID);
 				ObjectOutputStream outputToClient = new ObjectOutputStream(socket.getOutputStream());
 				clientList.put(socket, outputToClient);
+				
+				
 				Thread thread = new Thread(task);
 				thread.start();
 				clientID++;
@@ -155,7 +156,8 @@ public class Q3_ChatRoomServer extends Application {
 		synchronized(clientList) {
 			if(id!=0) {
 				//if message of any client
-				ta.appendText("Client "+id+" "+message+'\n');
+//				ta.appendText("Client "+id+" "+message+'\n');
+				ta.appendText(message+'\n');
 			}else {
 				//if server sending message
 				ta.appendText("Server message to all client: "+message+'\n');
@@ -167,7 +169,8 @@ public class Q3_ChatRoomServer extends Application {
 				try
                 {
               	if(id!=0){
-              	    outputToClient.writeObject("Client: "+id+" "+message + '\n');
+//              	    outputToClient.writeObject("Client: "+id+" "+message + '\n');
+              	    outputToClient.writeObject(message + '\n');
               	}
               	else
               	{
@@ -196,38 +199,29 @@ public class Q3_ChatRoomServer extends Application {
 		public void run() {
 			try {
 				ObjectInputStream  inputFromClient = new ObjectInputStream(socket.getInputStream());
-//				ObjectOutputStream outputToClient = new ObjectOutputStream(socket.getOutputStream());
 				
 				while(true) {
 					String	message = (String)inputFromClient.readObject();
-					sendToAll(message, id);
-//					ta.appendText("Client: "+this.id+" "+message + '\n');
-//					
-//					outputToClient.writeObject("Client: "+this.id+" "+message + '\n');
-//					
-//										
-//					
-//					send.setOnAction(event -> {
-//						try {
-//						String	message2 = inputTextField.getText();
-//						outputToClient.writeObject(message2);
-//						ta.appendText("Server: "+message + '\n');
-//						outputToClient.flush();
-//						inputTextField.clear();
-//						}catch(Exception ex) {
-//							ex.printStackTrace();
-//						}
-//					});
-					
+					sendToAll(message, id);					
 				}
 			} catch (IOException e) {
 				e.printStackTrace();
 			} catch (ClassNotFoundException e) {
 				e.printStackTrace();
-			}
-			
-		}
-		
+			}			
+		}		
+	}
+}
+
+class client{
+	String userName;
+	Socket socket;
+	ObjectOutputStream outputToClient;
+	
+	client(String userName, Socket socket, ObjectOutputStream outputToClient){
+		this.userName = userName;
+		this.socket = socket;
+		this.outputToClient = outputToClient;
 	}
 }
 
