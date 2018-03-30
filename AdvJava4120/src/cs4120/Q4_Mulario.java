@@ -17,18 +17,32 @@ public class Q4_Mulario extends Application{
 		borderPane.setStyle("-fx-border-color: blue");
 		Pane pane = new Pane();
 		borderPane.setCenter(pane);
+		
+		
+		for(int i=0; i<20;i++) {
+			Circle cir = new Circle();
+			cir.setRadius(10+(Math.random()*40));
+			cir.setCenterX(50+Math.random()*1150);
+			cir.setCenterY(50+Math.random()*950);
+			cir.setStroke(Color.RED);
+			cir.setFill(Color.color(Math.random(), Math.random(), Math.random()));
+			pane.getChildren().add(cir);
+		}
+		
+		
+		
 
 		Circle c = new Circle();
 		c.setRadius(50);
-		c.setCenterX(300);
-		c.setCenterY(400);
+		c.setCenterX(50+Math.random()*1150);
+		c.setCenterY(50+Math.random()*950);
 		c.setStroke(Color.BLACK);
-		c.setFill(Color.AQUA);
+		c.setFill(Color.GREEN);
 		pane.getChildren().add(c);
 
 		pane.setOnKeyPressed(e -> keyHandler(e, c));
 
-		Scene scene = new Scene(borderPane, 1000, 800);
+		Scene scene = new Scene(borderPane, 1200, 1000);
 		primaryStage.setTitle("Mulario");
 		primaryStage.setScene(scene);
 		primaryStage.show();
