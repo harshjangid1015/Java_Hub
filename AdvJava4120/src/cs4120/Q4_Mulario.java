@@ -2,10 +2,12 @@ package cs4120;
 
 import java.util.ArrayList;
 
+import javafx.animation.PathTransition;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
@@ -30,35 +32,58 @@ set the color of their circle by specifying red, green, and blue values, each in
 circle.*/
 
 public class Q4_Mulario extends Application{
-	static Label lblStatus = new Label("select ");
+	Label lblStatus = new Label("");
 	private ArrayList<Circle> nodes = new ArrayList<>();
 	Pane pane = new Pane();
+	Circle c = new Circle();
+	TextField tfr = new TextField();
+	TextField tfg = new TextField();
+	TextField tfb = new TextField();
+	HBox hBox = new HBox();
+	Button colButton = new Button("set color");
+	CheckBox cb = new CheckBox("Display Radius");
 
 	@Override
-	public void start(Stage primaryStage){
+	public void start(Stage primaryStage) {
 		BorderPane borderPane = new BorderPane();
 		borderPane.setStyle("-fx-border-color: blue");
-		StackPane stackPane = new StackPane();
+//		StackPane stackPane = new StackPane();
+//		stackPane.setStyle("-fx-border-color: green");
 //		Pane pane = new Pane();
-		stackPane.getChildren().add(pane);
+		pane.setStyle("-fx-border-color: red");
+//		stackPane.getChildren().add(pane);
 		
 		
-		HBox hBox = new HBox();
+		
 		borderPane.setTop(hBox);
-		borderPane.setCenter(stackPane);
-		borderPane.setBottom(lblStatus);
+		borderPane.setCenter(pane);
+//		borderPane.setBottom(lblStatus);
 		
-		TextField tf = new TextField();
+		
 //		hBox.getChildren().add(tf);
-		Button colButton = new Button("set color");
+		
 //		hBox.getChildren().add(colButton);
-		RadioButton rb = new RadioButton("Display Radius");
+//		RadioButton rb = new RadioButton("Display Radius");
 		
 		
+		cb.setOnAction(e -> {
+			if(cb.isSelected()) {
+				hBox.getChildren().add(lblStatus);
+			}else {
+				hBox.getChildren().remove(lblStatus);
+			}
+		});
+		colButton.setOnAction(ev -> {
+			int r = Integer.parseInt(tfr.getText());
+			int g = Integer.parseInt(tfg.getText());
+			int b = Integer.parseInt(tfb.getText());
+			//c.setFill(Color.rgb(Double.parseDouble(tfr.getText()), Double.parseDouble(tfg.getText()), Double.parseDouble(tfb.getText()));
+			c.setFill(Color.rgb(r, g, b));
+			pane.requestFocus();
+		});
 		
-		
-		
-//		hBox.getChildren().addAll(tf, colButton, rb);
+				
+		hBox.getChildren().addAll(tfr,tfg,tfb, colButton, cb);
 		
 		
 		for(int i=0; i<20;i++) {
@@ -69,11 +94,11 @@ public class Q4_Mulario extends Application{
 			cir.setStroke(Color.RED);
 			cir.setFill(Color.color(Math.random(), Math.random(), Math.random()));
 			nodes.add(cir);
-			pane.getChildren().add(cir);
+			pane.getChildren().add(cir);			
 		}
 				
 
-		Circle c = new Circle();
+//		Circle c = new Circle();
 		c.setRadius(50);
 		c.setCenterX(50+Math.random()*1150);
 		c.setCenterY(50+Math.random()*850);
@@ -89,17 +114,31 @@ public class Q4_Mulario extends Application{
 		primaryStage.setScene(scene);
 		primaryStage.show();
 		pane.requestFocus();
-		
-		
-
+	
+		tfr.setFocusTraversable(false);
+		tfg.setFocusTraversable(false);
+		tfb.setFocusTraversable(false);
+		cb.setFocusTraversable(false);
+		colButton.setFocusTraversable(false);
+		hBox.setFocusTraversable(false);
 	}
-
+	
+	
 	public void keyHandler(KeyEvent e, Circle c) {
 		switch(e.getCode()) {
 		case UP:
+//			pane.setStyle("-fx-border-color: red");
+			pane.requestFocus();
+			tfr.setFocusTraversable(false);
+			tfg.setFocusTraversable(false);
+			tfb.setFocusTraversable(false);
+			cb.setFocusTraversable(false);
+			colButton.setFocusTraversable(false);
+			hBox.setFocusTraversable(false);
 			c.setCenterX(c.getCenterX());
 			c.setCenterY(c.getCenterY()-10);
 			checkCircleIntersection(c);
+			
 			break;
 		case DOWN:
 			c.setCenterX(c.getCenterX());
@@ -127,7 +166,9 @@ public class Q4_Mulario extends Application{
 		Circle mainCircle = (Circle)c;
 		Circle otherCircle = (Circle)cir;
 		mainCircle.setRadius(mainCircle.getRadius() + 5);
-		
+		double newRadius = mainCircle.getRadius()+5;
+		lblStatus.setText(String.format(" %02X", (int)newRadius));
+//		lblStatus = "mainCircle.setRadius(mainCircle.getRadius() + 5)";
 //		Platform.runLater(() ->{
 //			nodes.remove(otherCircle);
 //			pane.getChildren().remove(otherCircle);
