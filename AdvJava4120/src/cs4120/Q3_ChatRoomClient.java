@@ -1,12 +1,9 @@
 package cs4120;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
-import java.util.Scanner;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -15,6 +12,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import javafx.stage.Stage;
 
 public class Q3_ChatRoomClient extends Application {
@@ -28,14 +26,20 @@ public class Q3_ChatRoomClient extends Application {
 	public void start(Stage primaryStage) {
 		BorderPane borderPane = new BorderPane();
 		ScrollPane scrollPane = new ScrollPane(ta);
-
+		ta.setStyle("-fx-background-color: yellow;");
+		scrollPane.setFitToHeight(true);
+		scrollPane.setFitToWidth(true);
+		scrollPane.setStyle("-fx-background:green");
+		
 		TextField inputTextField = new TextField();
 		TextField inputUserName = new TextField();
 
 		Button send = new Button("SEND");
 		Button setUserName = new Button("setUserName");
 		HBox hBox = new HBox();
+		HBox.setHgrow(inputTextField, Priority.ALWAYS);
 		hBox.getChildren().add(inputTextField);
+		
 		hBox.getChildren().add(send);
 		HBox hBox2 = new HBox();
 		hBox2.getChildren().addAll(inputUserName,setUserName);
@@ -52,16 +56,18 @@ public class Q3_ChatRoomClient extends Application {
 		setUserName.setOnAction(e -> {
 			userName = inputUserName.getText();
 			ta.appendText("user name set to: "+userName+'\n');
+			inputUserName.clear();
 		});
 		
 		try {
 			Socket socket = new Socket("localhost", 8000);
 			ta.appendText("clent connected to server" + '\n');
+			ta.appendText("Write a username & set it from above" + '\n');
 
 			outputToServer = new ObjectOutputStream(socket.getOutputStream());
 			inputFromServer = new ObjectInputStream(socket.getInputStream());
 		}catch(Exception ex) {
-
+				
 		}
 		new Thread(()->{
 			try {

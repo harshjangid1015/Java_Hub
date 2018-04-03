@@ -21,16 +21,6 @@ import javafx.scene.shape.Shape;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-/**
- * 2. (50 points) Q4_Mulario
-Write a GUI program using JavaFX. The idea of the program is to allow the user to control a
-circle on the screen. When the user presses an arrow key, the circle is to move in that direction.
-The program is to have small circles at random locations and of random colors on the screen.
-As the user moves their circle over a smaller circle, the smaller circle is absorbed into the user's
-circle, increasing the size of the user's circle. The program is to have text fields for the user to
-set the color of their circle by specifying red, green, and blue values, each in the range of 0 -
-255. Also have a check box for whether to display text on the circle indicating the size of the
-circle.*/
 
 public class Q4_Mulario extends Application{
 	private ArrayList<Circle> nodes = new ArrayList<>();
