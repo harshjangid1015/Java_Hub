@@ -44,7 +44,7 @@ public class Dictionary extends Application{
 
 				// Establish a connection
 				Connection connection = DriverManager.getConnection
-						("jdbc:mysql://localhost/dictionary", "scott", "tiger");
+						("jdbc:mysql://localhost/dictionary", "root", "root");
 				System.out.println("Database connected");
 
 				// Create a statement
